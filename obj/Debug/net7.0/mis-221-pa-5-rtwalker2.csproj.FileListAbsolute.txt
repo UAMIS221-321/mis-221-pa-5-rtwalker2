@@ -1,0 +1,15 @@
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\bin\Debug\net7.0\mis-221-pa-5-rtwalker2.exe
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\bin\Debug\net7.0\mis-221-pa-5-rtwalker2.deps.json
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\bin\Debug\net7.0\mis-221-pa-5-rtwalker2.runtimeconfig.json
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\bin\Debug\net7.0\mis-221-pa-5-rtwalker2.dll
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\bin\Debug\net7.0\mis-221-pa-5-rtwalker2.pdb
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.csproj.AssemblyReference.cache
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.AssemblyInfoInputs.cache
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.AssemblyInfo.cs
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.csproj.CoreCompileInputs.cache
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.dll
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\refint\mis-221-pa-5-rtwalker2.dll
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.pdb
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\mis-221-pa-5-rtwalker2.genruntimeconfig.cache
+C:\Users\ryanw\OneDrive\Desktop\MIS_221_Programs\PAs\mis-221-pa-5-rtwalker2\obj\Debug\net7.0\ref\mis-221-pa-5-rtwalker2.dll
