@@ -1,7 +1,13 @@
 ﻿using System;
 
 //MAIN---------------------
-OperatorCustomerMenu_Route();
+Menu_SubMenus_RouteEm(); //Has all menus and sub menus, routes them at the same time...gotta love switch statements
+
+
+
+
+
+
 
 
 //END MAIN------------------
@@ -10,38 +16,97 @@ OperatorCustomerMenu_Route();
 
 //FRAMEWORK METHODS--------------------
 
-static void OperatorCustomerMenu_Route() {
-    Console.Clear();
-    Console.WriteLine("Hello! Please select whether you are an operator or a customer below:\n\nType the corresponding number to choose:\n\n1. Operator\n2. Customer\n3. Exit");
-    int userChoice = 0;
+static void Menu_SubMenus_RouteEm() {
+    while (true) {
+        Console.Clear();
+        Console.WriteLine("Main Menu:");
+        Console.WriteLine("1. Operator");
+        Console.WriteLine("2. Customer");
+        Console.WriteLine("3. Exit");
 
-    while(userChoice != 3) {
-        try {
-            userChoice = int.Parse(Console.ReadLine());
-            if(userChoice < 1 || userChoice > 3) {
-                throw new Exception("Please enter a valid menu choice!");
-            }
-        }
-        catch (Exception e) {
-            Console.WriteLine(e.Message);
-            userChoice = 0;
-        }
-        finally {
-            if(userChoice == 1) {
-                Console.WriteLine("This is the operator experience");
-            }
-            else if(userChoice == 2) {
-                Console.WriteLine("This is the customer experience");
-            }
+        Console.Write("\nEnter your choice: ");
+        string choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "1": //Choice 1
+                while (true) {
+                    Console.Clear();
+                    Console.WriteLine("Option 1 Menu:");
+                    Console.WriteLine("1. Sub-option 1");
+                    Console.WriteLine("2. Sub-option 2");
+                    Console.WriteLine("3. Back to Main Menu");
+
+                    Console.Write("\nEnter your choice: ");
+                    string subChoice = Console.ReadLine();
+
+                    switch (subChoice)
+                    {
+                        case "1":
+                            // Do something for Sub-option 1
+                            Console.WriteLine("Sub-option 1 selected");
+                            Console.ReadKey();
+                            break;
+                        case "2":
+                            // Do something for Sub-option 2
+                            Console.WriteLine("Sub-option 2 selected");
+                            Console.ReadKey();
+                            break;
+                        case "3":
+                            // Go back to Main Menu
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice");
+                            Console.ReadKey();
+                            break;
+                    }
+
+                    if (subChoice == "3")
+                        break;
+                }
+                break;
+            case "2": //choice 2
+                while (true) {
+                    Console.Clear();
+                    Console.WriteLine("Option 2 Menu:");
+                    Console.WriteLine("1. Sub-option 1");
+                    Console.WriteLine("2. Sub-option 2");
+                    Console.WriteLine("3. Back to Main Menu");
+
+                    Console.Write("\nEnter your choice: ");
+                    string subChoice = Console.ReadLine();
+
+                    switch (subChoice)
+                    {
+                        case "1":
+                            // Do something for Sub-option 1
+                            Console.WriteLine("Sub-option 1 selected");
+                            Console.ReadKey();
+                            break;
+                        case "2":
+                            // Do something for Sub-option 2
+                            Console.WriteLine("Sub-option 2 selected");
+                            Console.ReadKey();
+                            break;
+                        case "3":
+                            // Go back to Main Menu
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice");
+                            Console.ReadKey();
+                            break;
+                    }
+
+                    if (subChoice == "3")
+                        break;
+                }
+                break;
+            case "3": //choice 3, exit
+                return;
+            default:
+                Console.WriteLine("Invalid choice");
+                Console.ReadKey();
+                break;
         }
     }
 }
-
-// static int GetUserChoice() {
-    
-//     string userChoice = Console.ReadLine();
-//     if (IsValidChoice(userChoice)) {
-//         return int.Parse(userChoice);
-//     }
-//     else return 0;
-// }
