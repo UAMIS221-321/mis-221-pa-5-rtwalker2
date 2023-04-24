@@ -2,10 +2,13 @@
 using PA5;
 
 //MAIN---------------------
-Menu_SubMenus_RouteEm(); //Has all menus and sub menus, routes them at the same time...gotta love switch statements
+Trainer[] trainers = new Trainer[100];
+TrainerUtility utility = new TrainerUtility(trainers);
+TrainerReport report = new TrainerReport(trainers);
 
-
-
+Menu_SubMenus_RouteEm(trainers, utility, report); 
+//utility.GetAllTrainersFromFile();
+// report.PrintAllTrainers();
 
 
 
@@ -15,7 +18,7 @@ Menu_SubMenus_RouteEm(); //Has all menus and sub menus, routes them at the same 
 
 //FRAMEWORK METHODS--------------------
 
-static void Menu_SubMenus_RouteEm() {
+static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility utility, TrainerReport report) {
     while (true) {
         DisplayMainMenu(); //displays the main menu
 
@@ -24,7 +27,7 @@ static void Menu_SubMenus_RouteEm() {
         switch (choice)
         {
             case "1": //Choice 1 - operator menus / methods
-                OperatorPath();
+                OperatorPath(trainers, utility, report);
                 break;
             case "2": //choice 2
                 while (true) {
@@ -93,18 +96,18 @@ static void DisplayOperatorMenu() { //Shows the operator menu to user
     Console.Write("\nEnter your choice: ");
 }
 
-static void OperatorPath() { //OPERATOR MENU AND METHODS----------------
+static void OperatorPath(Trainer[] trainers, TrainerUtility utility, TrainerReport report) { //OPERATOR MENU AND METHODS----------------
     while (true) {
         DisplayOperatorMenu(); //displays answer choices for the operator menu
 
-        string subChoice = Console.ReadLine(); //reads in sub-menu choice
+        string choice = Console.ReadLine(); //reads in sub-menu choice
 
-        switch (subChoice)
+        switch (choice)
         {
             case "1":
                 // Do something for Sub-option 1
-                Console.WriteLine("Manage Trainer Data selected");
-                Console.ReadKey();
+                //Console.WriteLine("Manage Trainer Data selected");
+                ManageTrainerData(trainers, utility, report);
                 break;
             case "2":
                 // Do something for Sub-option 2
@@ -128,7 +131,61 @@ static void OperatorPath() { //OPERATOR MENU AND METHODS----------------
                 break;
         }
 
-        if (subChoice == "5")
+        if (choice == "5")
+            break;
+    }
+}
+
+static void ManageTrainerData(Trainer[] trainers, TrainerUtility utility, TrainerReport report) {
+    while (true) {
+        Console.Clear();
+        Console.WriteLine("Would you like to ADD, EDIT, or DELETE any trainer data? (Enter corresponding number)");
+        Console.WriteLine("1. Add");
+        Console.WriteLine("2. Edit");
+        Console.WriteLine("3. Delete");
+        Console.WriteLine("4. View Data");
+        Console.WriteLine("5. Back to Operator Menu");
+
+        Console.Write("\nEnter your choice: ");
+        string choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "1":
+                // Do something for Sub-option 1
+                //Console.WriteLine("Sub-option 1 selected");
+                // Console.Clear();
+                utility.GetAllTrainersFromFile();
+                utility.AddTrainer();
+                Console.ReadKey();
+                break;
+            case "2":
+                // Do something for Sub-option 2
+                Console.WriteLine("Sub-option 2 selected");
+                Console.ReadKey();
+                break;
+            case "3":
+                Console.WriteLine("Sub-option 3 selected");
+                Console.ReadKey();
+                break;    
+            case "4":
+                //Console.WriteLine("Sub-option 4 selected");
+                Console.Clear();
+                Console.WriteLine("Trainer Data:\n");
+                utility.GetAllTrainersFromFile();
+                report.PrintAllTrainers();
+                Console.ReadKey();
+                break;             
+            case "5":
+                // Go back to Main Menu
+                break;
+            default:
+                Console.WriteLine("Invalid choice");
+                Console.ReadKey();
+                break;
+        }
+
+        if (choice == "5")
             break;
     }
 }

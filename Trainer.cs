@@ -6,6 +6,7 @@ namespace PA5
         private string trainerName;
         private string mailingAddress;
         private string trainerEmailAddress;
+        static private int count;
 
         //constructors
         public Trainer() {
@@ -17,6 +18,10 @@ namespace PA5
             this.trainerName = trainerName;
             this.mailingAddress = mailingAddress;
             this.trainerEmailAddress = trainerEmailAddress;
+        }
+
+        static public void IncrementCount() {//increment count
+            Trainer.count++;
         }
 
         //getters
@@ -36,6 +41,10 @@ namespace PA5
             return trainerEmailAddress;
         }
 
+        static public int GetCount() {// get count
+            return Trainer.count;
+        }
+
         //setters
         public void SetTrainerID(string trainerID) {
             this.trainerID = trainerID;
@@ -53,12 +62,19 @@ namespace PA5
             this.trainerEmailAddress = trainerEmailAddress;
         }
 
-        public override string ToString()
-        {
-            return $"Not sure what to put yet";
+        static public void SetCount(int count) { //set count
+            Trainer.count = count;
         }
 
+        public override string ToString()
+        {
+            return $"Trainer ID: {trainerID} | Name: {trainerName} | Mailing Address: {mailingAddress} | Email Address: {trainerEmailAddress}";
+        }
 
+        public string ToFile()
+        {
+            return $"{trainerID}#{trainerName}#{mailingAddress}#{trainerEmailAddress}";
+        }
 
     } 
 }
