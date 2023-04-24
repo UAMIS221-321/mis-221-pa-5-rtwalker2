@@ -53,7 +53,12 @@ namespace PA5
             this.trainerEmailAddress = trainerEmailAddress;
         }
 
+        public override string ToString()
+        {
+            return $"Not sure what to put yet";
+        }
 
 
-    }
+
+    } 
 }
