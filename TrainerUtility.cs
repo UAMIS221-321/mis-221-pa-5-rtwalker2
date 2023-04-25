@@ -61,7 +61,7 @@ namespace PA5
             return -1;
         }
 
-        public void updateTrainer() {
+        public void UpdateTrainer() {
             Console.WriteLine("Enter the \"trainer ID\" to update trainer info: ");
             string searchVal = Console.ReadLine();
             int foundIndex = Find(searchVal);
@@ -83,6 +83,34 @@ namespace PA5
                 Console.Clear();
                 Console.WriteLine("Trainer not found!");
                 Console.ReadKey();
+            }
+        }
+
+        public void DeleteTrainer() {
+            Console.WriteLine("Enter the \"trainer ID\" to be deleted (enter \"cancel\" to cancel): ");
+            string searchVal = Console.ReadLine();
+            if(searchVal.ToUpper() == "CANCEL") {
+                return;
+            }
+            else {
+            int foundIndex = Find(searchVal);
+            string[] lines = File.ReadAllLines("trainers.txt");
+
+            if(foundIndex != -1) {
+                if(foundIndex >= 0 && foundIndex < lines.Length) {
+                    lines[foundIndex] = null;//set line to null then below, remove null
+                    lines = lines.Where(x => x != null).ToArray();//.where() as used returns all elements in sequence that isn't null... to array converts back to array.
+                }
+                File.WriteAllLines("trainers.txt", lines);
+                Console.Clear(); 
+                Console.WriteLine("Trainer deleted");
+                Console.ReadKey();
+            }
+            else {
+                Console.Clear();
+                Console.WriteLine("Trainer not found!");
+                Console.ReadKey();
+            }
             }
         }   
 

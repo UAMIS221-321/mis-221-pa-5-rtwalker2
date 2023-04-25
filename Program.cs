@@ -139,7 +139,7 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility utility, TrainerRepo
 static void ManageTrainerData(Trainer[] trainers, TrainerUtility utility, TrainerReport report) {
     while (true) {
         Console.Clear();
-        Console.WriteLine("Would you like to ADD, EDIT, or DELETE any trainer data? (Enter corresponding number)");
+        Console.WriteLine("Would you like to ADD, EDIT, DELETE, or VIEW any trainer data? (Enter corresponding number)");
         Console.WriteLine("1. Add");
         Console.WriteLine("2. Edit");
         Console.WriteLine("3. Delete");
@@ -151,27 +151,28 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility utility, Traine
 
         switch (choice)
         {
-            case "1":
-                // Do something for Sub-option 1
+            case "1"://ADD TRAINER
                 //Console.WriteLine("Sub-option 1 selected");
-                // Console.Clear();
+                Console.Clear();
                 utility.GetAllTrainersFromFile();//maybe can comment out
                 utility.AddTrainer();
                 Console.ReadKey();
                 break;
-            case "2":
-                // Do something for Sub-option 2
+            case "2"://EDIT TRAINER
                 //Console.WriteLine("Sub-option 2 selected");
                 Console.Clear();
                 utility.GetAllTrainersFromFile();
-                utility.updateTrainer();
+                utility.UpdateTrainer();
                 //Console.ReadKey();
                 break;
-            case "3":
-                Console.WriteLine("Sub-option 3 selected");
-                Console.ReadKey();
+            case "3"://DELETE TRAINER
+                //Console.WriteLine("Sub-option 3 selected");
+                Console.Clear();
+                utility.GetAllTrainersFromFile();
+                utility.DeleteTrainer();
+                //Console.ReadKey();
                 break;    
-            case "4":
+            case "4"://VIEW TRAINER DATA LIST
                 //Console.WriteLine("Sub-option 4 selected");
                 Console.Clear();
                 Console.WriteLine("Trainer Data:\n");
