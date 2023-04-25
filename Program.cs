@@ -6,9 +6,9 @@ Trainer[] trainers = new Trainer[100];
 TrainerUtility utility = new TrainerUtility(trainers);
 TrainerReport report = new TrainerReport(trainers);
 
-Menu_SubMenus_RouteEm(trainers, utility, report); 
 //utility.GetAllTrainersFromFile();
-// report.PrintAllTrainers();
+Menu_SubMenus_RouteEm(trainers, utility, report); 
+
 
 
 
@@ -75,7 +75,7 @@ static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility utility, Tr
     }
 }
 
-static void DisplayMainMenu() { //Shows the main menu to the user
+static void DisplayMainMenu() { //Shows the MAIN menu to the user
     Console.Clear();
     Console.WriteLine("Main Menu:");
     Console.WriteLine("1. Operator");
@@ -84,7 +84,7 @@ static void DisplayMainMenu() { //Shows the main menu to the user
     Console.Write("\nEnter your choice: ");
 }
 
-static void DisplayOperatorMenu() { //Shows the operator menu to user
+static void DisplayOperatorMenu() { //Shows the OPERATOR menu to user
     Console.Clear();
     Console.WriteLine("Operator Menu:");
     Console.WriteLine("1. Manage Trainer Data");
@@ -155,14 +155,17 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility utility, Traine
                 // Do something for Sub-option 1
                 //Console.WriteLine("Sub-option 1 selected");
                 // Console.Clear();
-                utility.GetAllTrainersFromFile();
+                utility.GetAllTrainersFromFile();//maybe can comment out
                 utility.AddTrainer();
                 Console.ReadKey();
                 break;
             case "2":
                 // Do something for Sub-option 2
-                Console.WriteLine("Sub-option 2 selected");
-                Console.ReadKey();
+                //Console.WriteLine("Sub-option 2 selected");
+                Console.Clear();
+                utility.GetAllTrainersFromFile();
+                utility.updateTrainer();
+                //Console.ReadKey();
                 break;
             case "3":
                 Console.WriteLine("Sub-option 3 selected");
