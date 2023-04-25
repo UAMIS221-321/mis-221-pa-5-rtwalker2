@@ -3,11 +3,15 @@ using PA5;
 
 //MAIN---------------------
 Trainer[] trainers = new Trainer[100];
-TrainerUtility utility = new TrainerUtility(trainers);
-TrainerReport report = new TrainerReport(trainers);
+TrainerUtility trainerUtility = new TrainerUtility(trainers);
+TrainerReport trainerReport = new TrainerReport(trainers);
+
+Listing[] listings = new Listing[500];
+ListingUtility listingUtility = new ListingUtility(listings);
+ListingReport listingReport = new ListingReport(listings);
 
 //utility.GetAllTrainersFromFile();
-Menu_SubMenus_RouteEm(trainers, utility, report); 
+Menu_SubMenus_RouteEm(trainers, trainerUtility, trainerReport); 
 
 
 
@@ -18,7 +22,7 @@ Menu_SubMenus_RouteEm(trainers, utility, report);
 
 //FRAMEWORK METHODS--------------------
 
-static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility utility, TrainerReport report) {
+static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing lsit) {
     while (true) {
         DisplayMainMenu(); //displays the main menu
 
@@ -27,7 +31,7 @@ static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility utility, Tr
         switch (choice)
         {
             case "1": //Choice 1 - operator menus / methods
-                OperatorPath(trainers, utility, report);
+                OperatorPath(trainers, trainerUtility, trainerReport);
                 break;
             case "2": //choice 2
                 while (true) {
@@ -96,7 +100,7 @@ static void DisplayOperatorMenu() { //Shows the OPERATOR menu to user
     Console.Write("\nEnter your choice: ");
 }
 
-static void OperatorPath(Trainer[] trainers, TrainerUtility utility, TrainerReport report) { //OPERATOR MENU AND METHODS----------------
+static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport) { //OPERATOR MENU AND METHODS----------------
     while (true) {
         DisplayOperatorMenu(); //displays answer choices for the operator menu
 
@@ -107,7 +111,7 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility utility, TrainerRepo
             case "1":
                 // Do something for Sub-option 1
                 //Console.WriteLine("Manage Trainer Data selected");
-                ManageTrainerData(trainers, utility, report);
+                ManageTrainerData(trainers, trainerUtility, trainerReport);
                 break;
             case "2":
                 // Do something for Sub-option 2
@@ -136,7 +140,7 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility utility, TrainerRepo
     }
 }
 
-static void ManageTrainerData(Trainer[] trainers, TrainerUtility utility, TrainerReport report) {
+static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport) {
     while (true) {
         Console.Clear();
         Console.WriteLine("Would you like to ADD, EDIT, DELETE, or VIEW any trainer data? (Enter corresponding number)");
@@ -154,30 +158,30 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility utility, Traine
             case "1"://ADD TRAINER
                 //Console.WriteLine("Sub-option 1 selected");
                 Console.Clear();
-                utility.GetAllTrainersFromFile();//maybe can comment out
-                utility.AddTrainer();
+                trainerUtility.GetAllTrainersFromFile();//maybe can comment out
+                trainerUtility.AddTrainer();
                 Console.ReadKey();
                 break;
             case "2"://EDIT TRAINER
                 //Console.WriteLine("Sub-option 2 selected");
                 Console.Clear();
-                utility.GetAllTrainersFromFile();
-                utility.UpdateTrainer();
+                trainerUtility.GetAllTrainersFromFile();
+                trainerUtility.UpdateTrainer();
                 //Console.ReadKey();
                 break;
             case "3"://DELETE TRAINER
                 //Console.WriteLine("Sub-option 3 selected");
                 Console.Clear();
-                utility.GetAllTrainersFromFile();
-                utility.DeleteTrainer();
+                trainerUtility.GetAllTrainersFromFile();
+                trainerUtility.DeleteTrainer();
                 //Console.ReadKey();
                 break;    
             case "4"://VIEW TRAINER DATA LIST
                 //Console.WriteLine("Sub-option 4 selected");
                 Console.Clear();
                 Console.WriteLine("Trainer Data:\n");
-                utility.GetAllTrainersFromFile();
-                report.PrintAllTrainers();
+                trainerUtility.GetAllTrainersFromFile();
+                trainerReport.PrintAllTrainers();
                 Console.ReadKey();
                 break;             
             case "5":

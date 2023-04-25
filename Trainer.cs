@@ -76,5 +76,10 @@ namespace PA5
             return $"{trainerID}#{trainerName}#{mailingAddress}#{trainerEmailAddress}";
         }
 
+        public string ToListing() //may not need
+         {
+            return $"Trainer name: {trainerName}";
+         }
+
     } 
 }
