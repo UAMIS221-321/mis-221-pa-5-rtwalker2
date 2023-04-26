@@ -11,7 +11,7 @@ ListingUtility listingUtility = new ListingUtility(listings);
 ListingReport listingReport = new ListingReport(listings);
 
 //utility.GetAllTrainersFromFile();
-Menu_SubMenus_RouteEm(trainers, trainerUtility, trainerReport, listings, listingUtility, listingReport); 
+//Menu_SubMenus_RouteEm(trainers, trainerUtility, trainerReport, listings, listingUtility, listingReport); 
 
 
 
@@ -22,7 +22,7 @@ Menu_SubMenus_RouteEm(trainers, trainerUtility, trainerReport, listings, listing
 
 //FRAMEWORK METHODS--------------------
 
-static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport) {
+//static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport) {
     while (true) {
         DisplayMainMenu(); //displays the main menu
 
@@ -77,7 +77,7 @@ static void Menu_SubMenus_RouteEm(Trainer[] trainers, TrainerUtility trainerUtil
                 break;
         }
     }
-}
+//} end of mainmenusubmenu
 
 static void DisplayMainMenu() { //Shows the MAIN menu to the user
     Console.Clear();
@@ -119,7 +119,7 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, Trai
                 ManageListingData(listings, listingUtility, listingReport);
                 break;
             case "3":
-                Console.WriteLine("Manage custome booking data selected");
+                Console.WriteLine("Manage customer booking data selected");
                 Console.ReadKey();
                 break;
             case "4":
