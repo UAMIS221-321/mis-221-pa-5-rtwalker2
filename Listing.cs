@@ -97,7 +97,5 @@ namespace PA5
             return $"{listingID}#{trainerName}#{dateOfSession}#{timeOfSession}#{costOfSession}#{isListingTaken}";
         }
 
-
-
     }
 }
