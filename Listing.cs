@@ -3,20 +3,20 @@ namespace PA5
     public class Listing
     {
         private string listingID;
-        private Trainer trainer;
+        private string trainerName;
         private string dateOfSession;
         private string timeOfSession;
         private string costOfSession;
-        private bool isListingTaken;
+        private string isListingTaken;
         static private int count;
 
         public Listing() {
 
         }
 
-        public Listing(string listingID, Trainer trainer, string dateOfSession, string timeOfSession, string costOfSession, bool isListingTaken) {
+        public Listing(string listingID, string trainerName, string dateOfSession, string timeOfSession, string costOfSession, string isListingTaken) {
             this.listingID = listingID;
-            this.trainer = trainer;
+            this.trainerName = trainerName;
             this.dateOfSession = dateOfSession;
             this.timeOfSession = timeOfSession;
             this.costOfSession = costOfSession;
@@ -32,8 +32,8 @@ namespace PA5
             return listingID;
         }
 
-        public Trainer GetTrainer() {
-            return trainer;
+        public string GetTrainer() {
+            return trainerName;
         }
 
         public string GetDateOfSession() {
@@ -48,7 +48,7 @@ namespace PA5
             return costOfSession;
         }
 
-        public bool GetIsListingTaken() {
+        public string GetIsListingTaken() {
             return isListingTaken;
         }
 
@@ -62,8 +62,8 @@ namespace PA5
             this.listingID = listingID;
         }
 
-        public void SetTrainer(Trainer trainer) {
-            this.trainer = trainer;
+        public void SetTrainerName(string trainerName) {
+            this.trainerName = trainerName;
         }
 
         public void SetDateOfSession(string dateOfSession) {
@@ -78,7 +78,7 @@ namespace PA5
             this.costOfSession = costOfSession;
         }
 
-        public void SetIsListingTaken(bool isListingTaken) {
+        public void SetIsListingTaken(string isListingTaken) {
             this.isListingTaken = isListingTaken;
         }
 
@@ -89,12 +89,12 @@ namespace PA5
 
         public override string ToString()
         {
-            return $"Listing ID: {listingID} | Trainer Name: {trainer.GetTrainerName()} | Date of Session: {dateOfSession} | Time of Session: {timeOfSession} | Cost of Session: {costOfSession} | Is the listing taken: {isListingTaken}";
+            return $"Listing ID: {listingID} | Trainer Name: {trainerName} | Date of Session: {dateOfSession} | Time of Session: {timeOfSession} | Cost of Session: {costOfSession} | Is the listing taken: {isListingTaken}";
         }
 
         public string ToFile() 
         {
-            return $"{listingID}#{trainer.GetTrainerName()}#{dateOfSession}#{timeOfSession}#{costOfSession}#{isListingTaken}";
+            return $"{listingID}#{trainerName}#{dateOfSession}#{timeOfSession}#{costOfSession}#{isListingTaken}";
         }
 
 
