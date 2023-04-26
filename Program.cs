@@ -160,7 +160,7 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility,
                 Console.Clear();
                 trainerUtility.GetAllTrainersFromFile();//maybe can comment out
                 trainerUtility.AddTrainer();
-                Console.ReadKey();
+                //Console.ReadKey();
                 break;
             case "2"://EDIT TRAINER
                 //Console.WriteLine("Sub-option 2 selected");
@@ -216,30 +216,30 @@ static void ManageListingData(Listing[] listings, ListingUtility listingUtility,
             case "1"://ADD TRAINER
                 //Console.WriteLine("Sub-option 1 selected");
                 Console.Clear();
-                trainerUtility.GetAllTrainersFromFile();
-                trainerUtility.AddTrainer();
+                listingUtility.GetAllListingsFromFile();
+                listingUtility.AddListing();
                 Console.ReadKey();
                 break;
             case "2"://EDIT TRAINER
                 //Console.WriteLine("Sub-option 2 selected");
                 Console.Clear();
-                trainerUtility.GetAllTrainersFromFile();
-                trainerUtility.UpdateTrainer();
+                listingUtility.GetAllListingsFromFile();
+                listingUtility.UpdateListing();
                 //Console.ReadKey();
                 break;
             case "3"://DELETE TRAINER
                 //Console.WriteLine("Sub-option 3 selected");
                 Console.Clear();
-                trainerUtility.GetAllTrainersFromFile();
-                trainerUtility.DeleteTrainer();
+                listingUtility.GetAllListingsFromFile();
+                listingUtility.DeleteListing();
                 //Console.ReadKey();
                 break;    
             case "4"://VIEW TRAINER DATA LIST
                 //Console.WriteLine("Sub-option 4 selected");
                 Console.Clear();
-                Console.WriteLine("Trainer Data:\n");
-                trainerUtility.GetAllTrainersFromFile();
-                trainerReport.PrintAllTrainers();
+                Console.WriteLine("Listing Data:\n");
+                listingUtility.GetAllListingsFromFile();
+                listingReport.PrintAllListings();
                 Console.ReadKey();
                 break;             
             case "5":
