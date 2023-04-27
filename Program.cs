@@ -99,7 +99,7 @@ static void DisplayOperatorMenu() { //Shows the OPERATOR menu to user
     Console.WriteLine("2. Manage Listing Data"); //basics completed
     Console.WriteLine("3. Manage Customer Booking Data"); //basics completed
     Console.WriteLine("4. Run Reports"); //working on...
-    Console.WriteLine("5. Back to main menu");
+    Console.WriteLine("5. Back to Main Menu");
 
     Console.Write("\nEnter your choice: ");
 }
@@ -126,7 +126,8 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, Trai
                 ManageBookingData(sessions, sessionUtility, sessionReport, listings, listingUtility, listingReport);
                 break;
             case "4":
-                Console.WriteLine("run reports selected");
+                //Console.WriteLine("run reports selected");
+                ViewReports(trainers, trainerUtility, trainerReport, listings, listingUtility, listingReport, sessions, sessionUtility, sessionReport);
                 Console.ReadKey();
                 break;
             case "5":
@@ -352,4 +353,12 @@ static void BookSession(Session[] sessions, SessionUtility sessionUtility, Sessi
         if (choice == "5")
             break;
     }
+}
+
+static void ViewReports(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport, Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport) {
+sessionUtility.GetAllSessionsFromFile();
+//sessionReport.PrintIndividualSessionReport();
+
+sessionReport.SortByCustomer_Date();
+sessionReport.PrintAllSessions();
 }
