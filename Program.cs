@@ -2,7 +2,7 @@
 using PA5;
 
 //MAIN---------------------
-Trainer[] trainers = new Trainer[100];
+Trainer[] trainers = new Trainer[500];
 TrainerUtility trainerUtility = new TrainerUtility(trainers);
 TrainerReport trainerReport = new TrainerReport(trainers);
 
@@ -95,10 +95,10 @@ static void DisplayMainMenu() { //Shows the MAIN menu to the user
 static void DisplayOperatorMenu() { //Shows the OPERATOR menu to user
     Console.Clear();
     Console.WriteLine("Operator Menu:");
-    Console.WriteLine("1. Manage Trainer Data");
-    Console.WriteLine("2. Manage Listing Data");
-    Console.WriteLine("3. Manage Customer Booking Data");
-    Console.WriteLine("4. Run Reports");
+    Console.WriteLine("1. Manage Trainer Data"); //basics completed
+    Console.WriteLine("2. Manage Listing Data"); //basics completed
+    Console.WriteLine("3. Manage Customer Booking Data"); //basics completed
+    Console.WriteLine("4. Run Reports"); //working on...
     Console.WriteLine("5. Back to main menu");
 
     Console.Write("\nEnter your choice: ");
@@ -123,7 +123,7 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, Trai
                 ManageListingData(listings, listingUtility, listingReport);
                 break;
             case "3":
-                ManageBookingData(sessions, sessionUtility, sessionReport);
+                ManageBookingData(sessions, sessionUtility, sessionReport, listings, listingUtility, listingReport);
                 break;
             case "4":
                 Console.WriteLine("run reports selected");
@@ -259,7 +259,7 @@ static void ManageListingData(Listing[] listings, ListingUtility listingUtility,
     }
 }
 
-static void ManageBookingData(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport) {
+static void ManageBookingData(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport) {
     while (true) {
         Console.Clear();
         Console.WriteLine("Would you like to view available sessions or book a session? (Enter corresponding number)");
@@ -274,7 +274,7 @@ static void ManageBookingData(Session[] sessions, SessionUtility sessionUtility,
         {
             case "1":
                 Console.Clear();
-
+                ViewSessions(sessions, sessionUtility, sessionReport, listings, listingUtility, listingReport);
                 //Console.ReadKey();
                 break;
             case "2"://BOOK A SESSION
@@ -294,6 +294,13 @@ static void ManageBookingData(Session[] sessions, SessionUtility sessionUtility,
         if (choice == "3")
             break;
     }
+}
+
+static void ViewSessions(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport) {
+    listingUtility.GetAllListingsFromFile();
+    Console.WriteLine("Available Sessions: \n");
+    listingReport.PrintAvailableListings();
+    Console.ReadKey();
 }
 
 static void BookSession(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport) {
