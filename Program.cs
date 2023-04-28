@@ -115,15 +115,15 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, Trai
             case "1":
                 // Do something for Sub-option 1
                 //Console.WriteLine("Manage Trainer Data selected");
-                ManageTrainerData(trainers, trainerUtility, trainerReport);
+                ManageTrainerData(trainers, trainerUtility, trainerReport, listings, listingUtility, sessions, sessionUtility);
                 break;
             case "2":
                 // Do something for Sub-option 2
                 //Console.WriteLine("Manage Listing Data selected");
-                ManageListingData(listings, listingUtility, listingReport);
+                ManageListingData(listings, listingUtility, listingReport, trainers, trainerUtility, sessions, sessionUtility);
                 break;
             case "3":
-                ManageBookingData(sessions, sessionUtility, sessionReport, listings, listingUtility, listingReport);
+                ManageBookingData(sessions, sessionUtility, sessionReport, listings, listingUtility, listingReport, trainers, trainerUtility);
                 break;
             case "4":
                 //Console.WriteLine("run reports selected");
@@ -144,7 +144,7 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, Trai
     }
 }
 
-static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport) {
+static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing[] listings1, ListingUtility listingUtility1, Session[] sessions1, SessionUtility sessionUtility1) {
     while (true) {
         Console.Clear();
         Console.WriteLine("Would you like to ADD, EDIT, DELETE, or VIEW any trainer data? (Enter corresponding number)");
@@ -170,7 +170,7 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility,
                 //Console.WriteLine("Sub-option 2 selected");
                 Console.Clear();
                 trainerUtility.GetAllTrainersFromFile();
-                trainerUtility.UpdateTrainer();
+                trainerUtility.UpdateTrainer(listings1, listingUtility1, sessions1, sessionUtility1, trainers);
                 //Console.ReadKey();
                 break;
             case "3"://DELETE TRAINER
@@ -202,7 +202,7 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility,
     }
 }
 
-static void ManageListingData(Listing[] listings, ListingUtility listingUtility, ListingReport listingReport) {
+static void ManageListingData(Listing[] listings, ListingUtility listingUtility, ListingReport listingReport, Trainer[] trainers, TrainerUtility trainerUtility, Session[] sessions, SessionUtility sessionUtility) {
     while (true) {
         Console.Clear();
         Console.WriteLine("Would you like to ADD, EDIT, DELETE, or VIEW any listing data? (Enter corresponding number)");
@@ -221,14 +221,14 @@ static void ManageListingData(Listing[] listings, ListingUtility listingUtility,
                 //Console.WriteLine("Sub-option 1 selected");
                 Console.Clear();
                 listingUtility.GetAllListingsFromFile();
-                listingUtility.AddListing();
+                listingUtility.AddListing(trainers, trainerUtility);
                 Console.ReadKey();
                 break;
             case "2"://EDIT TRAINER
                 //Console.WriteLine("Sub-option 2 selected");
                 Console.Clear();
                 listingUtility.GetAllListingsFromFile();
-                listingUtility.UpdateListing();
+                listingUtility.UpdateListing(trainers, trainerUtility, sessions, sessionUtility, listings);
                 //Console.ReadKey();
                 break;
             case "3"://DELETE TRAINER
@@ -260,7 +260,7 @@ static void ManageListingData(Listing[] listings, ListingUtility listingUtility,
     }
 }
 
-static void ManageBookingData(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport) {
+static void ManageBookingData(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport, Trainer[] trainers, TrainerUtility trainerUtility) {
     while (true) {
         Console.Clear();
         Console.WriteLine("Would you like to view available sessions or book a session? (Enter corresponding number)");
@@ -280,7 +280,7 @@ static void ManageBookingData(Session[] sessions, SessionUtility sessionUtility,
                 break;
             case "2"://BOOK A SESSION
                 Console.Clear();
-                BookSession(sessions, sessionUtility, sessionReport);
+                BookSession(sessions, sessionUtility, sessionReport, listings, listingUtility, trainers, trainerUtility);
                 //Console.ReadKey();
                 break;            
             case "3":
@@ -304,7 +304,7 @@ static void ViewSessions(Session[] sessions, SessionUtility sessionUtility, Sess
     Console.ReadKey();
 }
 
-static void BookSession(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport) {
+static void BookSession(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport, Listing[] listings, ListingUtility listingUtility, Trainer[] trainers, TrainerUtility trainerUtility) {
     while (true) {
         Console.Clear();
         Console.WriteLine("Would you like to ADD, EDIT, DELETE, or VIEW any session data? (Enter corresponding number)");
@@ -319,22 +319,22 @@ static void BookSession(Session[] sessions, SessionUtility sessionUtility, Sessi
 
         switch (choice)
         {
-            case "1"://ADD TRAINER
+            case "1"://ADD SESSION
                 Console.Clear();
                 sessionUtility.GetAllSessionsFromFile();
-                sessionUtility.AddSession();
+                sessionUtility.AddSession(listings, listingUtility, trainers, trainerUtility);
                 break;
-            case "2"://EDIT TRAINER
+            case "2"://EDIT SESSION
                 Console.Clear();
                 sessionUtility.GetAllSessionsFromFile();
-                sessionUtility.UpdateSession();
+                sessionUtility.UpdateSession(listings, listingUtility, trainers, trainerUtility);
                 break;
-            case "3"://DELETE TRAINER
+            case "3"://DELETE SESSION
                 Console.Clear();
                 sessionUtility.GetAllSessionsFromFile();
                 sessionUtility.DeleteSession();
                 break;    
-            case "4"://VIEW TRAINER DATA LIST
+            case "4"://VIEW DATA LIST
                 Console.Clear();
                 Console.WriteLine("Session Data:\n");
                 sessionUtility.GetAllSessionsFromFile();

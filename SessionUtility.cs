@@ -5,6 +5,9 @@ namespace PA5
     {
 
         private Session[] sessions;
+        // private Listing[] listings1 = new Listing[500];
+        // private ListingUtility listingUtility1;
+        // private ListingReport listingReport1;
 
         public SessionUtility(Session[] sessions) {
             this.sessions = sessions;
@@ -28,11 +31,31 @@ namespace PA5
             inFile.Close();
         }
 
-        public void AddSession() {
-
-            Console.WriteLine("Enter a Session ID: ");
+        public void AddSession(Listing[] listings1, ListingUtility listingUtility1, Trainer[] trainers1, TrainerUtility trainerUtility1) {
             Session mySession = new Session();
-            mySession.SetSessionID(Console.ReadLine());
+            string sessionID = "";
+            int index = -1;
+
+            listingUtility1.GetAllListingsFromFile();
+            while(true) {
+                Console.WriteLine("Enter a Session ID (or 'cancel' to cancel): ");
+                sessionID = Console.ReadLine();
+                if(sessionID.ToLower() == "cancel") {
+                    return;
+                }
+                for(int i = 0; i < Listing.GetCount(); i++) {
+                    if(listings1[i].GetListingID() == sessionID) {
+                        index = i;
+                        break;
+                    }
+                    else {
+                        Console.Clear();
+                        Console.WriteLine("Please enter a valid session ID!\nMust be exact same as available session ID\n\n");
+                    }
+                }
+                if(index != -1) break;
+            }
+            mySession.SetSessionID(listings1[index].GetListingID());
 
             Console.WriteLine("Enter a customer name: ");
             mySession.SetCustomerName(Console.ReadLine());
@@ -40,26 +63,55 @@ namespace PA5
             Console.WriteLine("Enter a customer email: ");
             mySession.SetCustomerEmail(Console.ReadLine());
 
-            DateTime date;
-            bool validDate = false;
-            while (!validDate) {
-                Console.WriteLine("Please enter a training date in MM/DD/YYYY format: ");
-                string input = Console.ReadLine();
+            // DateTime date;
+            // bool validDate = false;
+            // while (!validDate) {
+            //     Console.WriteLine("Please enter a training date in MM/DD/YYYY format: ");
+            //     string input = Console.ReadLine();
 
-                if (DateTime.TryParseExact(input, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
-                    //Console.WriteLine("Valid date: " + date.ToShortDateString());
-                    mySession.SetTrainingDate(date.ToShortDateString());
-                    validDate = true;
-                } else {
-                    Console.WriteLine("Invalid date, please try again.");
-                }
-            }
+            //     if (DateTime.TryParseExact(input, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
+            //         //Console.WriteLine("Valid date: " + date.ToShortDateString());
+            //         mySession.SetTrainingDate(date.ToShortDateString());
+            //         validDate = true;
+            //     } else {
+            //         Console.WriteLine("Invalid date, please try again.");
+            //     }
+            // }
+            mySession.SetTrainingDate(listings1[index].GetDateOfSession());
 
-            Console.WriteLine("Enter trainer ID: ");
-            mySession.SetTrainerID(Console.ReadLine());
+            // Console.WriteLine("Enter trainer ID: ");
+            // mySession.SetTrainerID(Console.ReadLine());
+            // Console.WriteLine("Enter trainer name: ");
+            // mySession.SetTrainerName(Console.ReadLine());
+            mySession.SetTrainerID(listings1[index].GetTrainerID());
+            mySession.SetTrainerName(listings1[index].GetTrainerName());
+            // string trainerID = "";
+            // int index2 = -1;
+            // trainerUtility1.GetAllTrainersFromFile();
+            // while(true) {
+            //     Console.WriteLine("Enter a Trainer ID (or 'cancel' to cancel): ");
+            //     trainerID = Console.ReadLine();
+            //     if(trainerID.ToLower() == "cancel") {
+            //         return;
+            //     }
+            //     for(int i = 0; i < Trainer.GetCount(); i++) {
+            //         if(trainers1[i].GetTrainerID() == trainerID) {
+            //             index2 = i;
+            //             break;
+            //         }
+            //         else {
+            //             Console.Clear();
+            //             Console.WriteLine("Please enter a valid trainer ID!\nMust be exact same as available trainer IDs\n\n");
+            //         }
+            //     }
+            //     if(index2 != -1) break;
+            // }
+            // mySession.SetTrainerID(trainers1[index2].GetTrainerID());
 
-            Console.WriteLine("Enter trainer name: ");
-            mySession.SetTrainerName(Console.ReadLine());
+
+            // //Console.WriteLine("Enter a trainer name: ");
+            // mySession.SetTrainerName(trainers1[index2].GetTrainerName());
+
 
             string input2;
             bool validAnswer = false;
@@ -90,6 +142,16 @@ namespace PA5
             outFile.Close();
         }
 
+        public void PublicSave(int index) {
+            StreamWriter outFile = new StreamWriter("transactions.txt");
+
+            for(int i = 0; i < Session.GetCount(); i++) {
+                outFile.WriteLine(sessions[index].ToFile());
+            }
+
+            outFile.Close();      
+        }
+
         public int Find(string searchVal) { // searches using LISTING ID
             for(int i = 0; i < Session.GetCount(); i++) {
                 if(sessions[i].GetSessionID().ToLower() == searchVal.ToLower()) {
@@ -99,15 +161,48 @@ namespace PA5
             return -1;
         }
 
-        public void UpdateSession() {
+        public int FindTrainerID(string searchVal) {
+            for(int i = 0; i < Session.GetCount(); i++) {
+            if(sessions[i].GetTrainerID().ToLower() == searchVal.ToLower()) {
+                return i;
+            }
+            }
+            return -1;
+        }
+
+        public void UpdateSession(Listing[] listings1, ListingUtility listingUtility1, Trainer[] trainers1, TrainerUtility trainerUtility1) {
             Console.WriteLine("Enter the \"listing ID\" to update a listing's info: ");
             string searchVal = Console.ReadLine();
             int foundIndex = Find(searchVal);
 
             if(foundIndex != -1) {
                 Console.Clear();
-                Console.WriteLine("Enter a Session ID: ");
-                sessions[foundIndex].SetSessionID(Console.ReadLine());
+                // Console.WriteLine("Enter a Session ID: ");
+                // sessions[foundIndex].SetSessionID(Console.ReadLine());
+
+                string sessionID = "";
+                int index = -1;
+
+                listingUtility1.GetAllListingsFromFile();
+                while(true) {
+                    Console.WriteLine("Enter a Session ID (or 'cancel' to cancel): ");
+                    sessionID = Console.ReadLine();
+                    if(sessionID.ToLower() == "cancel") {
+                        return;
+                    }
+                    for(int i = 0; i < Listing.GetCount(); i++) {
+                        if(listings1[i].GetListingID() == sessionID) {
+                            index = i;
+                            break;
+                        }
+                        else {
+                            Console.Clear();
+                            Console.WriteLine("Please enter a valid session ID!\nMust be exact same as available session ID\n\n");
+                        }
+                    }
+                    if(index != -1) break;
+                }
+                sessions[foundIndex].SetSessionID(listings1[index].GetListingID());
 
                 Console.WriteLine("Enter a customer name: ");
                 sessions[foundIndex].SetCustomerName(Console.ReadLine());
@@ -115,26 +210,54 @@ namespace PA5
                 Console.WriteLine("Enter a customer email: ");
                 sessions[foundIndex].SetCustomerEmail(Console.ReadLine());
 
-                DateTime date;
-                bool validDate = false;
-                while (!validDate) {
-                    Console.WriteLine("Please enter a training date in MM/DD/YYYY format: ");
-                    string input = Console.ReadLine();
+                // DateTime date;
+                // bool validDate = false;
+                // while (!validDate) {
+                //     Console.WriteLine("Please enter a training date in MM/DD/YYYY format: ");
+                //     string input = Console.ReadLine();
 
-                    if (DateTime.TryParseExact(input, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
-                        //Console.WriteLine("Valid date: " + date.ToShortDateString());
-                        sessions[foundIndex].SetTrainingDate(date.ToShortDateString());
-                        validDate = true;
-                    } else {
-                        Console.WriteLine("Invalid date, please try again.");
-                    }
-                }
+                //     if (DateTime.TryParseExact(input, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
+                //         //Console.WriteLine("Valid date: " + date.ToShortDateString());
+                //         sessions[foundIndex].SetTrainingDate(date.ToShortDateString());
+                //         validDate = true;
+                //     } else {
+                //         Console.WriteLine("Invalid date, please try again.");
+                //     }
+                // }
+                sessions[foundIndex].SetTrainingDate(listings1[index].GetDateOfSession());
 
-                Console.WriteLine("Enter trainer ID: ");
-                sessions[foundIndex].SetTrainerID(Console.ReadLine());
+                // Console.WriteLine("Enter trainer ID: ");
+                // sessions[foundIndex].SetTrainerID(Console.ReadLine());
+                // Console.WriteLine("Enter trainer name: ");
+                // sessions[foundIndex].SetTrainerName(Console.ReadLine());
+                sessions[foundIndex].SetTrainerID(listings1[index].GetTrainerID());
+                sessions[foundIndex].SetTrainerName(listings1[index].GetTrainerName());
+                // string trainerID = "";
+                // int index2 = -1;
+                // trainerUtility1.GetAllTrainersFromFile();
+                // while(true) {
+                //     Console.WriteLine("Enter a Trainer ID (or 'cancel' to cancel): ");
+                //     trainerID = Console.ReadLine();
+                //     if(trainerID.ToLower() == "cancel") {
+                //         return;
+                //     }
+                //     for(int i = 0; i < Trainer.GetCount(); i++) {
+                //         if(trainers1[i].GetTrainerID() == trainerID) {
+                //             index2 = i;
+                //             break;
+                //         }
+                //         else {
+                //             Console.Clear();
+                //             Console.WriteLine("Please enter a valid trainer ID!\nMust be exact same as available trainer IDs\n\n");
+                //         }
+                //     }
+                //     if(index2 != -1) break;
+                // }
+                // sessions[foundIndex].SetTrainerID(trainers1[index2].GetTrainerID());
 
-                Console.WriteLine("Enter trainer name: ");
-                sessions[foundIndex].SetTrainerName(Console.ReadLine());
+
+                // //Console.WriteLine("Enter a trainer name: ");
+                // sessions[foundIndex].SetTrainerName(trainers1[index2].GetTrainerName());
 
                 string input2;
                 bool validAnswer = false;

@@ -3,6 +3,7 @@ namespace PA5
     public class Listing
     {
         private string listingID;
+        private string trainerID;
         private string trainerName;
         private string dateOfSession;
         private string timeOfSession;
@@ -14,8 +15,9 @@ namespace PA5
 
         }
 
-        public Listing(string listingID, string trainerName, string dateOfSession, string timeOfSession, string costOfSession, string isListingTaken) {
+        public Listing(string listingID, string trainerID, string trainerName, string dateOfSession, string timeOfSession, string costOfSession, string isListingTaken) {
             this.listingID = listingID;
+            this.trainerID = trainerID;
             this.trainerName = trainerName;
             this.dateOfSession = dateOfSession;
             this.timeOfSession = timeOfSession;
@@ -32,7 +34,11 @@ namespace PA5
             return listingID;
         }
 
-        public string GetTrainer() {
+        public string GetTrainerID() {
+            return trainerID;
+        }
+
+        public string GetTrainerName() {
             return trainerName;
         }
 
@@ -62,6 +68,10 @@ namespace PA5
             this.listingID = listingID;
         }
 
+        public void SetTrainerID(string trainerID) {
+            this.trainerID = trainerID;
+        }
+
         public void SetTrainerName(string trainerName) {
             this.trainerName = trainerName;
         }
@@ -89,12 +99,12 @@ namespace PA5
 
         public override string ToString()
         {
-            return $"Listing ID: {listingID} | Trainer Name: {trainerName} | Date of Session: {dateOfSession} | Time of Session: {timeOfSession} | Cost of Session: {costOfSession} | Is the listing taken: {isListingTaken}";
+            return $"Listing ID: {listingID} | Trainer ID: {trainerID} | Trainer Name: {trainerName} | Date of Session: {dateOfSession} | Time of Session: {timeOfSession} | Cost of Session: {costOfSession} | Is the listing taken: {isListingTaken}";
         }
 
         public string ToFile() 
         {
-            return $"{listingID}#{trainerName}#{dateOfSession}#{timeOfSession}#{costOfSession}#{isListingTaken}";
+            return $"{listingID}#{trainerID}#{trainerName}#{dateOfSession}#{timeOfSession}#{costOfSession}#{isListingTaken}";
         }
 
     }

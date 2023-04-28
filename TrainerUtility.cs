@@ -61,7 +61,20 @@ namespace PA5
             return -1;
         }
 
-        public void UpdateTrainer() {
+        public void UpdateListing_Session(string oldTrainerID, int foundIndex, Listing[] listings1, ListingUtility listingUtility1, Session[] sessions1, SessionUtility sessionUtility1, Trainer[] trainers1) {
+            sessionUtility1.GetAllSessionsFromFile();
+            listingUtility1.GetAllListingsFromFile();
+            int sessionIndex = sessionUtility1.FindTrainerID(oldTrainerID);
+            int listingIndex = listingUtility1.FindTrainerID(oldTrainerID);
+            sessions1[sessionIndex].SetTrainerID(trainers1[foundIndex].GetTrainerID());
+            sessions1[sessionIndex].SetTrainerName(trainers1[foundIndex].GetTrainerName());
+            listings1[listingIndex].SetTrainerID(trainers1[foundIndex].GetTrainerID());
+            listings1[listingIndex].SetTrainerName(trainers1[foundIndex].GetTrainerName());
+            sessionUtility1.PublicSave(sessionIndex);
+            listingUtility1.PublicSave(listingIndex);
+        }
+
+        public void UpdateTrainer(Listing[] listings1, ListingUtility listingUtility1, Session[] sessions1, SessionUtility sessionUtility1, Trainer[] trainers1) {
             Console.WriteLine("Enter the \"trainer ID\" to update trainer info: ");
             string searchVal = Console.ReadLine();
             int foundIndex = Find(searchVal);
@@ -77,6 +90,7 @@ namespace PA5
                 Console.WriteLine("Enter a new trainer email address: ");
                 trainers[foundIndex].SetTrainerEmailAddress(Console.ReadLine());
 
+                UpdateListing_Session(searchVal, foundIndex, listings1, listingUtility1, sessions1, sessionUtility1, trainers1);
                 Save();
             }
             else {
