@@ -37,6 +37,7 @@ namespace PA5
             int index = -1;
 
             listingUtility1.GetAllListingsFromFile();
+
             while(true) {
                 Console.WriteLine("Enter a Session ID (or 'cancel' to cancel): ");
                 sessionID = Console.ReadLine();
@@ -44,18 +45,27 @@ namespace PA5
                     return;
                 }
                 for(int i = 0; i < Listing.GetCount(); i++) {
-                    if(listings1[i].GetListingID() == sessionID) {
-                        index = i;
+                    if(listings1[i].GetIsListingTaken() == "yes" && (listings1[i].GetListingID() == sessionID)) {
+                        // Console.Clear();
+                        Console.WriteLine("Listing is already taken!");
                         break;
                     }
                     else {
-                        Console.Clear();
-                        Console.WriteLine("Please enter a valid session ID!\nMust be exact same as available session ID\n\n");
+                    
+                        if(listings1[i].GetListingID() == sessionID) {
+                            index = i;
+                            break;
+                        }
+                        else {
+                            Console.Clear();
+                            Console.WriteLine("Please enter a valid session ID!\nMust be exact same as available session ID\n\n");
+                        }
                     }
                 }
                 if(index != -1) break;
             }
             mySession.SetSessionID(listings1[index].GetListingID());
+            listings1[listingUtility1.Find(sessionID)].SetIsListingTaken("yes");
 
             Console.WriteLine("Enter a customer name: ");
             mySession.SetCustomerName(Console.ReadLine());
@@ -112,23 +122,24 @@ namespace PA5
             // //Console.WriteLine("Enter a trainer name: ");
             // mySession.SetTrainerName(trainers1[index2].GetTrainerName());
 
+            mySession.SetSessionStatus("booked");
+            // string input2;
+            // bool validAnswer = false;
+            // while (!validAnswer) {
+            //     Console.Write("Enter if the session has been 'booked', 'completed', or 'canceled'");
+            //     input2 = Console.ReadLine();
 
-            string input2;
-            bool validAnswer = false;
-            while (!validAnswer) {
-                Console.Write("Enter if the session has been 'booked', 'completed', or 'canceled'");
-                input2 = Console.ReadLine();
-
-                if (input2.ToLower() == "booked" || input2.ToLower() == "completed" || input2.ToLower() == "canceled") {
-                    mySession.SetSessionStatus(input2.ToLower());
-                    validAnswer = true;
-                } else {
-                    Console.WriteLine("Invalid input, please enter 'booked', 'completed', or 'canceled'.");
-                }
-            }
+            //     if (input2.ToLower() == "booked" || input2.ToLower() == "completed" || input2.ToLower() == "canceled") {
+            //         mySession.SetSessionStatus(input2.ToLower());
+            //         validAnswer = true;
+            //     } else {
+            //         Console.WriteLine("Invalid input, please enter 'booked', 'completed', or 'canceled'.");
+            //     }
+            // }
 
             sessions[Session.GetCount()] = mySession;
             Session.IncrementCount();
+            listingUtility1.PublicSave();
             Save();
         }
 
@@ -169,9 +180,9 @@ namespace PA5
             }
             return -1;
         }
-
+//NEED TO CHANGE UPDATE SESSION AKA EDIT SESSION TO ONLY ALLOW CHANGE OF THE STATUS OF BOOKED
         public void UpdateSession(Listing[] listings1, ListingUtility listingUtility1, Trainer[] trainers1, TrainerUtility trainerUtility1) {
-            Console.WriteLine("Enter the \"listing ID\" to update a listing's info: ");
+            Console.WriteLine("Enter the \"Session ID\" to update a sessions's info: ");
             string searchVal = Console.ReadLine();
             int foundIndex = Find(searchVal);
 
@@ -185,7 +196,7 @@ namespace PA5
 
                 listingUtility1.GetAllListingsFromFile();
                 while(true) {
-                    Console.WriteLine("Enter a Session ID (or 'cancel' to cancel): ");
+                    Console.WriteLine("Enter a new Session ID (or 'cancel' to cancel): ");
                     sessionID = Console.ReadLine();
                     if(sessionID.ToLower() == "cancel") {
                         return;
@@ -273,7 +284,6 @@ namespace PA5
                     }
                 }     
 
-
                     Save();
             }
             else {
@@ -282,33 +292,67 @@ namespace PA5
                 Console.ReadKey();
             }
         }
-
-        public void DeleteSession() {
+//---------------------
+            // while(true) {
+            //     Console.WriteLine("Enter a Session ID (or 'cancel' to cancel): ");
+            //     sessionID = Console.ReadLine();
+            //     if(sessionID.ToLower() == "cancel") {
+            //         return;
+            //     }
+            //     for(int i = 0; i < Listing.GetCount(); i++) {
+            //         if(listings1[i].GetIsListingTaken() == "yes") {
+            //             Console.Clear();
+            //             Console.WriteLine("Listing is already taken!");
+            //             break;
+            //         }
+            //         else {
+                    
+            //             if(listings1[i].GetListingID() == sessionID) {
+            //                 index = i;
+            //                 break;
+            //             }
+            //             else {
+            //                 Console.Clear();
+            //                 Console.WriteLine("Please enter a valid session ID!\nMust be exact same as available session ID\n\n");
+            //             }
+            //         }
+            //     }
+            //     if(index != -1) break;
+            // }
+//----------------------------
+        public void DeleteSession(Listing[] listings, ListingUtility listingUtility) {
             Console.WriteLine("Enter the \"Session ID\" to be deleted (enter \"cancel\" to cancel): ");
             string searchVal = Console.ReadLine();
+            
             if(searchVal.ToUpper() == "CANCEL") {
                 return;
             }
             else {
-            int foundIndex = Find(searchVal);
-            string[] lines = File.ReadAllLines("transactions.txt");
+                int foundIndex = Find(searchVal);
+                string[] lines = File.ReadAllLines("transactions.txt");
 
-            if(foundIndex != -1) {
-                if(foundIndex >= 0 && foundIndex < lines.Length) {
-                    lines[foundIndex] = null;//set line to null then below, remove null
-                    lines = lines.Where(x => x != null).ToArray();//.where() as used returns all elements in sequence that isn't null... to array converts back to array.
+                if(foundIndex != -1) {
+                    if(foundIndex >= 0 && foundIndex < lines.Length) {
+                        lines[foundIndex] = null;//set line to null then below, remove null
+                        lines = lines.Where(x => x != null).ToArray();//.where() as used returns all elements in sequence that isn't null... to array converts back to array.
+                    }
+                    File.WriteAllLines("transactions.txt", lines);
+                    Console.Clear(); 
+                    //---
+                    listingUtility.GetAllListingsFromFile();
+                    listings[listingUtility.Find(searchVal)].SetIsListingTaken("no");
+                    listingUtility.PublicSave();
+                    //---
+                    Console.WriteLine("Listing deleted");
+                    Console.ReadKey();
                 }
-                File.WriteAllLines("transactions.txt", lines);
-                Console.Clear(); 
-                Console.WriteLine("Listing deleted");
-                Console.ReadKey();
+                else {
+                    Console.Clear();
+                    Console.WriteLine("Listing not found!");
+                    Console.ReadKey();
+                }
             }
-            else {
-                Console.Clear();
-                Console.WriteLine("Listing not found!");
-                Console.ReadKey();
-            }
-            }
+            
         } 
 
     

@@ -158,6 +158,24 @@ namespace PA5
             outFile.Close();      
         }
 
+        public void PublicSave() {
+            StreamWriter outFile = new StreamWriter("listings.txt");
+
+            for(int i = 0; i < Listing.GetCount(); i++) {
+                outFile.WriteLine(listings[i].ToFile());
+            }
+
+            outFile.Close();             
+        }
+
+        public void SingleLineSave(int index) {
+            StreamWriter outFile = new StreamWriter("listings.txt");
+            
+            outFile.WriteLine(listings[index].ToFile());
+
+            outFile.Close();      
+        }
+
         public int Find(string searchVal) { // searches using LISTING ID
             for(int i = 0; i < Listing.GetCount(); i++) {
                 if(listings[i].GetListingID().ToLower() == searchVal.ToLower()) {
@@ -176,8 +194,9 @@ namespace PA5
             return -1;
         }
 
-        public void UpdateSessionInfo(string oldSessionID, int foundIndex, Session[] sessions1, SessionUtility sessionUtility1, Listing[] listings1) {
+        public void UpdateSessionInfo(string oldSessionID, int foundIndex, Session[] sessions1, SessionUtility sessionUtility1, Listing[] listings1, ListingUtility listingUtility1) {
             sessionUtility1.GetAllSessionsFromFile();
+            listingUtility1.GetAllListingsFromFile();
             int index = sessionUtility1.Find(oldSessionID);
             sessions1[index].SetSessionID(listings1[foundIndex].GetListingID());
             sessions1[index].SetTrainingDate(listings1[foundIndex].GetDateOfSession());
@@ -186,7 +205,7 @@ namespace PA5
             sessionUtility1.PublicSave(index);
         }
 
-        public void UpdateListing(Trainer[] trainers1, TrainerUtility trainerUtility1, Session[] sessions1, SessionUtility sessionUtility1, Listing[] listings1) {
+        public void UpdateListing(Trainer[] trainers1, TrainerUtility trainerUtility1, Session[] sessions1, SessionUtility sessionUtility1, Listing[] listings1, ListingUtility listingUtility1) {
             Console.WriteLine("Enter the \"listing ID\" to update a listing's info: ");
             string searchVal = Console.ReadLine();
             int foundIndex = Find(searchVal);
@@ -294,9 +313,16 @@ namespace PA5
                 // listings[foundIndex].SetCostOfSession(Console.ReadLine());
                 // Console.WriteLine("Enter if the listing has been taken or not (yes/no)");
                 // listings[foundIndex].SetIsListingTaken(Console.ReadLine());
-
-                UpdateSessionInfo(searchVal, foundIndex, sessions1, sessionUtility1, listings1);
-                Save();
+                try {
+                    UpdateSessionInfo(searchVal, foundIndex, sessions1, sessionUtility1, listings1, listingUtility1);
+                }
+                catch (Exception e){
+                    
+                }
+                finally {
+                    Save();
+                }
+                //Save();
             }
             else {
                 Console.Clear();

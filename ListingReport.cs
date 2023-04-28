@@ -22,5 +22,24 @@ namespace PA5
                 }
             }
         }
+
+        public void PrintRevenueReport(Session[] sessions, SessionUtility sessionUtility, Listing[] listings, ListingUtility listingUtility) {
+            sessionUtility.GetAllSessionsFromFile();
+            listingUtility.GetAllListingsFromFile();
+            int revenue = 0;
+            string sessionID = "";
+            Console.WriteLine("Revenue Report:\n");
+            for(int i = 0; i < Session.GetCount(); i++) {
+                if(sessions[i].GetSessionStatus() == "completed") {
+                    sessionID = sessions[i].GetSessionID();
+                    Console.WriteLine($"{sessions[i].ToString()}");
+                    revenue += int.Parse(listings[listingUtility.Find(sessionID)].GetCostOfSession());
+                }
+            }
+            Console.WriteLine($"\nTotal Revenue: ${revenue}");
+        }
+
+
+
     }
 }

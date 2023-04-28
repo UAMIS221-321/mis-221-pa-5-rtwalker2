@@ -90,8 +90,17 @@ namespace PA5
                 Console.WriteLine("Enter a new trainer email address: ");
                 trainers[foundIndex].SetTrainerEmailAddress(Console.ReadLine());
 
-                UpdateListing_Session(searchVal, foundIndex, listings1, listingUtility1, sessions1, sessionUtility1, trainers1);
-                Save();
+                try {
+                    UpdateListing_Session(searchVal, foundIndex, listings1, listingUtility1, sessions1, sessionUtility1, trainers1);
+                }
+                catch (Exception e){
+                    
+                }
+                finally {
+                    Save();
+                }
+                
+                //Save();
             }
             else {
                 Console.Clear();

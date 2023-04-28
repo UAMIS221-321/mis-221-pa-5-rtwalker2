@@ -13,7 +13,6 @@ ListingReport listingReport = new ListingReport(listings);
 Session[] sessions = new Session[500];
 SessionUtility sessionUtility = new SessionUtility(sessions);
 SessionReport sessionReport = new SessionReport(sessions);
-
 //utility.GetAllTrainersFromFile();
 //Menu_SubMenus_RouteEm(trainers, trainerUtility, trainerReport, listings, listingUtility, listingReport); 
 
@@ -162,7 +161,7 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility,
             case "1"://ADD TRAINER
                 //Console.WriteLine("Sub-option 1 selected");
                 Console.Clear();
-                trainerUtility.GetAllTrainersFromFile();//maybe can comment out
+                trainerUtility.GetAllTrainersFromFile();
                 trainerUtility.AddTrainer();
                 //Console.ReadKey();
                 break;
@@ -217,21 +216,21 @@ static void ManageListingData(Listing[] listings, ListingUtility listingUtility,
 
         switch (choice)
         {
-            case "1"://ADD TRAINER
+            case "1":
                 //Console.WriteLine("Sub-option 1 selected");
                 Console.Clear();
                 listingUtility.GetAllListingsFromFile();
                 listingUtility.AddListing(trainers, trainerUtility);
                 Console.ReadKey();
                 break;
-            case "2"://EDIT TRAINER
+            case "2":
                 //Console.WriteLine("Sub-option 2 selected");
                 Console.Clear();
                 listingUtility.GetAllListingsFromFile();
-                listingUtility.UpdateListing(trainers, trainerUtility, sessions, sessionUtility, listings);
+                listingUtility.UpdateListing(trainers, trainerUtility, sessions, sessionUtility, listings, listingUtility);
                 //Console.ReadKey();
                 break;
-            case "3"://DELETE TRAINER
+            case "3":
                 //Console.WriteLine("Sub-option 3 selected");
                 Console.Clear();
                 listingUtility.GetAllListingsFromFile();
@@ -332,7 +331,7 @@ static void BookSession(Session[] sessions, SessionUtility sessionUtility, Sessi
             case "3"://DELETE SESSION
                 Console.Clear();
                 sessionUtility.GetAllSessionsFromFile();
-                sessionUtility.DeleteSession();
+                sessionUtility.DeleteSession(listings, listingUtility);
                 break;    
             case "4"://VIEW DATA LIST
                 Console.Clear();
@@ -356,9 +355,47 @@ static void BookSession(Session[] sessions, SessionUtility sessionUtility, Sessi
 }
 
 static void ViewReports(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport, Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport) {
-sessionUtility.GetAllSessionsFromFile();
-//sessionReport.PrintIndividualSessionReport();
 
-sessionReport.SortByCustomer_Date();
-sessionReport.PrintAllSessions();
+while (true) {
+        Console.Clear();
+        Console.WriteLine("Report Menu:");
+        Console.WriteLine("1. Individual Customer Report");
+        Console.WriteLine("2. Customer Report By Customer-Date");
+        Console.WriteLine("3. Revenue Report");
+        Console.WriteLine("4. Back to Operator Menu");
+
+        Console.Write("\nEnter your choice: ");
+        string choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "1":
+                Console.Clear();
+                sessionUtility.GetAllSessionsFromFile();
+                sessionReport.PrintIndividualSessionReport();
+                Console.ReadKey();
+                break;
+            case "2":
+                Console.Clear();
+                sessionUtility.GetAllSessionsFromFile();
+                sessionReport.SortByCustomer_Date();
+                sessionReport.PrintAllSessions();
+                Console.ReadKey();
+                break;
+            case "3":
+                Console.Clear();
+                listingReport.PrintRevenueReport(sessions, sessionUtility, listings, listingUtility);
+                Console.ReadKey();
+                break;    
+            case "4":
+                break;             
+            default:
+                Console.WriteLine("Invalid choice");
+                Console.ReadKey();
+                break;
+        }
+
+        if (choice == "4")
+            break;
+    }
 }
