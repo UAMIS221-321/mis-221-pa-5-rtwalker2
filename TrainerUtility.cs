@@ -74,7 +74,15 @@ namespace PA5
             listingUtility1.PublicSave(listingIndex);
         }
 
-        public void UpdateTrainer(Listing[] listings1, ListingUtility listingUtility1, Session[] sessions1, SessionUtility sessionUtility1, Trainer[] trainers1) {
+        public void UpdateListing(string oldTrainerID, int foundIndex, Listing[] listings1, ListingUtility listingUtility1, Trainer[] trainers1) {
+            listingUtility1.GetAllListingsFromFile();
+            int listingIndex = listingUtility1.FindTrainerID(oldTrainerID);
+            listings1[listingIndex].SetTrainerID(trainers1[foundIndex].GetTrainerID());
+            listings1[listingIndex].SetTrainerName(trainers1[foundIndex].GetTrainerName());
+            listingUtility1.PublicSave(listingIndex);
+        }
+
+        public void UpdateTrainer(Listing[] listings1, ListingUtility listingUtility1, Session[] sessions1, SessionUtility sessionUtility1, Trainer[] trainers1, TrainerUtility trainerUtility1) {
             Console.WriteLine("Enter the \"trainer ID\" to update trainer info: ");
             string searchVal = Console.ReadLine();
             int foundIndex = Find(searchVal);
@@ -89,12 +97,27 @@ namespace PA5
                 trainers[foundIndex].SetMailingAddress(Console.ReadLine());
                 Console.WriteLine("Enter a new trainer email address: ");
                 trainers[foundIndex].SetTrainerEmailAddress(Console.ReadLine());
-
+                
+                //Save();
                 try {
                     UpdateListing_Session(searchVal, foundIndex, listings1, listingUtility1, sessions1, sessionUtility1, trainers1);
+                    listingUtility1.PublicSave();
+                    sessionUtility1.PublicSave();               
                 }
-                catch (Exception e){
-                    
+                catch (Exception e1){
+
+                }
+                finally {
+                    Save();
+
+                }
+
+                try {
+                    UpdateListing(searchVal, foundIndex, listings1, listingUtility1, trainers1);
+                    listingUtility1.PublicSave();                
+                }
+                catch (Exception e2) {
+
                 }
                 finally {
                     Save();

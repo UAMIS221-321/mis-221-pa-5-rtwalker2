@@ -116,19 +116,20 @@ namespace PA5
             // Console.WriteLine("Enter the cost of the session: ");
             // myListing.SetCostOfSession(Console.ReadLine());
 
-            string input2;
-            bool validAnswer = false;
-            while (!validAnswer) {
-                Console.Write("Enter if the listing has been taken 'yes' or 'no': ");
-                input2 = Console.ReadLine();
+            // string input2;
+            // bool validAnswer = false;
+            // while (!validAnswer) {
+            //     Console.Write("Enter if the listing has been taken 'yes' or 'no': ");
+            //     input2 = Console.ReadLine();
 
-                if (input2.ToLower() == "yes" || input2.ToLower() == "no") {
-                    myListing.SetIsListingTaken(input2.ToLower());
-                    validAnswer = true;
-                } else {
-                    Console.WriteLine("Invalid input, please enter 'yes' or 'no'.");
-                }
-            }
+            //     if (input2.ToLower() == "yes" || input2.ToLower() == "no") {
+            //         myListing.SetIsListingTaken(input2.ToLower());
+            //         validAnswer = true;
+            //     } else {
+            //         Console.WriteLine("Invalid input, please enter 'yes' or 'no'.");
+            //     }
+            // }
+            myListing.SetIsListingTaken("no");
 
             // Console.WriteLine("Enter if the listing has been taken or not (yes/no)");
             // myListing.SetIsListingTaken(Console.ReadLine());
@@ -192,6 +193,15 @@ namespace PA5
             }
             }
             return -1;
+        }
+
+        public int FindListingID(string searchVal) {
+            for(int i = 0; i < Listing.GetCount(); i++) {
+                if(listings[i].GetListingID().ToLower() == searchVal.ToLower()) {
+                    return i;
+                }
+            }
+            return -1;    
         }
 
         public void UpdateSessionInfo(string oldSessionID, int foundIndex, Session[] sessions1, SessionUtility sessionUtility1, Listing[] listings1, ListingUtility listingUtility1) {
@@ -291,19 +301,20 @@ namespace PA5
                     }
                 }
 
-                string input2;
-                bool validAnswer = false;
-                while (!validAnswer) {
-                    Console.Write("Enter if the listing has been taken 'yes' or 'no': ");
-                    input2 = Console.ReadLine();
+                //DON'T NEED TO ASK TO CHANGE STATUS
+                // string input2;
+                // bool validAnswer = false;
+                // while (!validAnswer) {
+                //     Console.Write("Enter if the listing has been taken 'yes' or 'no': ");
+                //     input2 = Console.ReadLine();
 
-                    if (input2.ToLower() == "yes" || input2.ToLower() == "no") {
-                        listings[foundIndex].SetIsListingTaken(input2.ToLower());
-                        validAnswer = true;
-                    } else {
-                        Console.WriteLine("Invalid input, please enter 'yes' or 'no'.");
-                    }
-                }
+                //     if (input2.ToLower() == "yes" || input2.ToLower() == "no") {
+                //         listings[foundIndex].SetIsListingTaken(input2.ToLower());
+                //         validAnswer = true;
+                //     } else {
+                //         Console.WriteLine("Invalid input, please enter 'yes' or 'no'.");
+                //     }
+                // }
 
                 // Console.WriteLine("Enter the date of the session: ");
                 // listings[foundIndex].SetDateOfSession(Console.ReadLine());
@@ -313,6 +324,7 @@ namespace PA5
                 // listings[foundIndex].SetCostOfSession(Console.ReadLine());
                 // Console.WriteLine("Enter if the listing has been taken or not (yes/no)");
                 // listings[foundIndex].SetIsListingTaken(Console.ReadLine());
+                Save();
                 try {
                     UpdateSessionInfo(searchVal, foundIndex, sessions1, sessionUtility1, listings1, listingUtility1);
                 }
@@ -329,7 +341,7 @@ namespace PA5
                 Console.WriteLine("Listing not found!");
                 Console.ReadKey();
             }
-        }
+        }//END UPDATE LISTING
 
         public void DeleteListing() {
             Console.WriteLine("Enter the \"Listing ID\" to be deleted (enter \"cancel\" to cancel): ");

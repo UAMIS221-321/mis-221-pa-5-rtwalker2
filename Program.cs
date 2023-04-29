@@ -1,5 +1,6 @@
 ﻿using System;
 using PA5;
+using System.Text;
 
 //MAIN---------------------
 Trainer[] trainers = new Trainer[500];
@@ -34,7 +35,18 @@ SessionReport sessionReport = new SessionReport(sessions);
         switch (choice)
         {
             case "1": //Choice 1 - operator menus / methods
+                Console.Clear();
+                Console.WriteLine("Please enter the password:");
+                string passwordAnswer = Console.ReadLine();
+                if(passwordAnswer == "mis221")
+                {
                 OperatorPath(trainers, trainerUtility, trainerReport, listings, listingUtility, listingReport, sessions, sessionUtility, sessionReport);
+                }
+                else {
+                    Console.Clear();
+                    Console.WriteLine("Incorrect!");
+                    Console.ReadKey();
+                }
                 break;
             case "2": //choice 2
                 while (true) {
@@ -169,7 +181,7 @@ static void ManageTrainerData(Trainer[] trainers, TrainerUtility trainerUtility,
                 //Console.WriteLine("Sub-option 2 selected");
                 Console.Clear();
                 trainerUtility.GetAllTrainersFromFile();
-                trainerUtility.UpdateTrainer(listings1, listingUtility1, sessions1, sessionUtility1, trainers);
+                trainerUtility.UpdateTrainer(listings1, listingUtility1, sessions1, sessionUtility1, trainers, trainerUtility);
                 //Console.ReadKey();
                 break;
             case "3"://DELETE TRAINER
@@ -228,7 +240,6 @@ static void ManageListingData(Listing[] listings, ListingUtility listingUtility,
                 Console.Clear();
                 listingUtility.GetAllListingsFromFile();
                 listingUtility.UpdateListing(trainers, trainerUtility, sessions, sessionUtility, listings, listingUtility);
-                //Console.ReadKey();
                 break;
             case "3":
                 //Console.WriteLine("Sub-option 3 selected");
@@ -308,7 +319,7 @@ static void BookSession(Session[] sessions, SessionUtility sessionUtility, Sessi
         Console.Clear();
         Console.WriteLine("Would you like to ADD, EDIT, DELETE, or VIEW any session data? (Enter corresponding number)");
         Console.WriteLine("1. Book a session (ADD)");
-        Console.WriteLine("2. EDIT a session");
+        Console.WriteLine("2. EDIT a session's booking status");
         Console.WriteLine("3. DELETE a session");
         Console.WriteLine("4. View Data");
         Console.WriteLine("5. Back to Booking Menu");
@@ -373,19 +384,22 @@ while (true) {
                 Console.Clear();
                 sessionUtility.GetAllSessionsFromFile();
                 sessionReport.PrintIndividualSessionReport();
-                Console.ReadKey();
+                //Console.ReadKey();
                 break;
             case "2":
                 Console.Clear();
                 sessionUtility.GetAllSessionsFromFile();
                 sessionReport.SortByCustomer_Date();
                 sessionReport.PrintAllSessions();
-                Console.ReadKey();
+                if(sessionReport.yesNo()) {
+                    sessionReport.PrintAllSessionsToFile("reports.txt");
+                }
+                //Console.ReadKey();
                 break;
             case "3":
                 Console.Clear();
-                listingReport.PrintRevenueReport(sessions, sessionUtility, listings, listingUtility);
-                Console.ReadKey();
+                listingReport.PrintRevenueReport(sessions, sessionUtility, sessionReport, listings, listingUtility);
+                //Console.ReadKey();
                 break;    
             case "4":
                 break;             
