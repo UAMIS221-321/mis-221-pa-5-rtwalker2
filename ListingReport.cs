@@ -12,7 +12,6 @@ namespace PA5
         public void PrintAllListings() {
             for(int i = 0; i < Listing.GetCount(); i++) {
                 Console.WriteLine(listings[i].ToString());
-                //Console.WriteLine(listings[i].GetIsListingTaken());
             }
         }
 

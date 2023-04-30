@@ -33,8 +33,6 @@ namespace PA5
             Listing myListing = new Listing();
             myListing.SetListingID(Console.ReadLine());
 
-            // Console.WriteLine("Enter a trainer ID: ");
-            // myListing.SetTrainerID(Console.ReadLine());
             string trainerID = "";
             int index = -1;
             trainerUtility1.GetAllTrainersFromFile();
@@ -61,9 +59,6 @@ namespace PA5
                 }
             }
             myListing.SetTrainerID(trainers1[index].GetTrainerID());
-
-
-            //Console.WriteLine("Enter a trainer name: ");
             myListing.SetTrainerName(trainers1[index].GetTrainerName());
 
             DateTime date;
@@ -73,15 +68,12 @@ namespace PA5
                 string input = Console.ReadLine();
 
                 if (DateTime.TryParseExact(input, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)) {
-                    //Console.WriteLine("Valid date: " + date.ToShortDateString());
                     myListing.SetDateOfSession(date.ToShortDateString());
                     validDate = true;
                 } else {
                     Console.WriteLine("Invalid date, please try again.");
                 }
             }
-            // Console.WriteLine("Enter the date of the session: ");
-            // myListing.SetDateOfSession(Console.ReadLine());
 
             DateTime time;
             bool validTime = false;
@@ -98,9 +90,6 @@ namespace PA5
                     Console.WriteLine("Invalid time, Use HH:MM format (13:15 = 1:15 PM, 04:40 = 4:40am).");
                 }
             }
-
-            // Console.WriteLine("Enter the time of the session: ");
-            // myListing.SetTimeOfSession(Console.ReadLine());
 
             int num;
             bool validNum = false;
@@ -133,10 +122,7 @@ namespace PA5
             //         Console.WriteLine("Invalid input, please enter 'yes' or 'no'.");
             //     }
             // }
-            myListing.SetIsListingTaken("no");
-
-            // Console.WriteLine("Enter if the listing has been taken or not (yes/no)");
-            // myListing.SetIsListingTaken(Console.ReadLine());
+            myListing.SetIsListingTaken("no");//AUTO DEFAULTS TO NO
 
             listings[Listing.GetCount()] = myListing;
             Listing.IncrementCount();
@@ -153,7 +139,7 @@ namespace PA5
             outFile.Close();
         }
 
-        public void PublicSave(int index) {
+        public void PublicSave(int index) { //save at an index
             StreamWriter outFile = new StreamWriter("listings.txt");
 
             for(int i = 0; i < Listing.GetCount(); i++) {
@@ -163,7 +149,7 @@ namespace PA5
             outFile.Close();      
         }
 
-        public void PublicSave() {
+        public void PublicSave() { //general save
             StreamWriter outFile = new StreamWriter("listings.txt");
 
             for(int i = 0; i < Listing.GetCount(); i++) {
@@ -171,14 +157,6 @@ namespace PA5
             }
 
             outFile.Close();             
-        }
-
-        public void SingleLineSave(int index) {
-            StreamWriter outFile = new StreamWriter("listings.txt");
-            
-            outFile.WriteLine(listings[index].ToFile());
-
-            outFile.Close();      
         }
 
         public int Find(string searchVal) { // searches using LISTING ID
@@ -190,7 +168,7 @@ namespace PA5
             return -1;
         }
 
-        public int FindTrainerID(string searchVal) {
+        public int FindTrainerID(string searchVal) { //for SESSIONS
             for(int i = 0; i < Session.GetCount(); i++) {
             if(listings[i].GetTrainerID().ToLower() == searchVal.ToLower()) {
                 return i;
@@ -199,7 +177,7 @@ namespace PA5
             return -1;
         }
 
-        public int FindTrainerID(string searchVal, Trainer[] trainers) {
+        public int FindTrainerID(string searchVal, Trainer[] trainers) { //for TRAINERS
             for(int i = 0; i < Trainer.GetCount(); i++) {
             if(trainers[i].GetTrainerID().ToLower() == searchVal.ToLower()) {
                 return i;
@@ -208,7 +186,7 @@ namespace PA5
             return -1;
         }
 
-        public int FindListingID(string searchVal) {
+        public int FindListingID(string searchVal) { //for LISTINGS
             for(int i = 0; i < Listing.GetCount(); i++) {
                 if(listings[i].GetListingID().ToLower() == searchVal.ToLower()) {
                     return i;
@@ -217,6 +195,7 @@ namespace PA5
             return -1;    
         }
 
+        //updates sessions one step above itself
         public void UpdateSessionInfo(string oldSessionID, int foundIndex, Session[] sessions1, SessionUtility sessionUtility1, Listing[] listings1, ListingUtility listingUtility1) {
             sessionUtility1.GetAllSessionsFromFile();
             listingUtility1.GetAllListingsFromFile();
@@ -228,6 +207,7 @@ namespace PA5
             sessionUtility1.PublicSave(index);
         }
 
+        //updates listings
         public void UpdateListing(Trainer[] trainers1, TrainerUtility trainerUtility1, Session[] sessions1, SessionUtility sessionUtility1, Listing[] listings1, ListingUtility listingUtility1) {
             Console.WriteLine("Enter the \"listing ID\" to update a listing's info: ");
             string searchVal = Console.ReadLine();
@@ -261,13 +241,8 @@ namespace PA5
                 }
                 listings[foundIndex].SetTrainerID(trainers1[index].GetTrainerID());
                 listings[foundIndex].SetTrainerName(trainers1[index].GetTrainerName());
-                //-------------
-                // Console.WriteLine("Enter a new trainer ID: ");
-                // listings[foundIndex].SetTrainerID(Console.ReadLine());
 
-                // Console.WriteLine("Enter a new trainer name: ");
-                // listings[foundIndex].SetTrainerName(Console.ReadLine());
-
+                //date
                 DateTime date;
                 bool validDate = false;
                 while (!validDate) {
@@ -283,6 +258,7 @@ namespace PA5
                     }
                 }
 
+                //time
                 DateTime time;
                 bool validTime = false;
 
@@ -298,7 +274,7 @@ namespace PA5
                         Console.WriteLine("Invalid time, Use HH:MM format (13:15 = 1:15 PM, 04:40 = 4:40am).");
                     }
                 }
-
+                //cost
                 int num;
                 bool validNum = false;
 
@@ -328,17 +304,8 @@ namespace PA5
                 //         Console.WriteLine("Invalid input, please enter 'yes' or 'no'.");
                 //     }
                 // }
-
-                // Console.WriteLine("Enter the date of the session: ");
-                // listings[foundIndex].SetDateOfSession(Console.ReadLine());
-                // Console.WriteLine("Enter the time of the session: ");
-                // listings[foundIndex].SetTimeOfSession(Console.ReadLine());
-                // Console.WriteLine("Enter the cost of the session: ");
-                // listings[foundIndex].SetCostOfSession(Console.ReadLine());
-                // Console.WriteLine("Enter if the listing has been taken or not (yes/no)");
-                // listings[foundIndex].SetIsListingTaken(Console.ReadLine());
                 Save();
-                try {
+                try { //try to update sessions
                     UpdateSessionInfo(searchVal, foundIndex, sessions1, sessionUtility1, listings1, listingUtility1);
                 }
                 catch (Exception e){
@@ -347,7 +314,6 @@ namespace PA5
                 finally {
                     Save();
                 }
-                //Save();
             }
             else {
                 Console.Clear();

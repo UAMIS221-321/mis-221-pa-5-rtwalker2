@@ -25,7 +25,7 @@ namespace PA5
             outFile.Close();     
         }
 
-        public void PrintIndividualSessionReport() {
+        public void PrintIndividualSessionReport() { //session report by email
             string inputEmail;
             string customerName = "n/a";
             bool isEmailThere = false;
@@ -79,7 +79,7 @@ namespace PA5
 
         }
 
-        public void PrintIndividualSessionReportNoSave() {
+        public void PrintIndividualSessionReportNoSave() { //session report by email, console output only
             string inputEmail;
             string customerName = "n/a";
             bool isEmailThere = false;
@@ -110,7 +110,7 @@ namespace PA5
 
         }
 
-        public bool yesNo() {
+        public bool yesNo() { //get yes no
                 while(true) {
                     Console.WriteLine("\nWould you like to save this report? (y/n)");
                     string choice = Console.ReadLine();

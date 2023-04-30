@@ -61,6 +61,7 @@ namespace PA5
             return -1;
         }
 
+//updates info to listings and sessions
         public void UpdateListing_Session(string oldTrainerID, int foundIndex, Listing[] listings1, ListingUtility listingUtility1, Session[] sessions1, SessionUtility sessionUtility1, Trainer[] trainers1) {
             sessionUtility1.GetAllSessionsFromFile();
             listingUtility1.GetAllListingsFromFile();
@@ -73,7 +74,7 @@ namespace PA5
             sessionUtility1.PublicSave(sessionIndex);
             listingUtility1.PublicSave(listingIndex);
         }
-
+//updates only one level above should there be no sessions but there are listings
         public void UpdateListing(string oldTrainerID, int foundIndex, Listing[] listings1, ListingUtility listingUtility1, Trainer[] trainers1) {
             listingUtility1.GetAllListingsFromFile();
             int listingIndex = listingUtility1.FindTrainerID(oldTrainerID);
@@ -98,8 +99,7 @@ namespace PA5
                 Console.WriteLine("Enter a new trainer email address: ");
                 trainers[foundIndex].SetTrainerEmailAddress(Console.ReadLine());
                 
-                //Save();
-                try {
+                try {//tries it just in case there is nothing to update
                     UpdateListing_Session(searchVal, foundIndex, listings1, listingUtility1, sessions1, sessionUtility1, trainers1);
                     listingUtility1.PublicSave();
                     sessionUtility1.PublicSave();               
@@ -112,7 +112,7 @@ namespace PA5
 
                 }
 
-                try {
+                try {//tries it just in case there is nothing to update
                     UpdateListing(searchVal, foundIndex, listings1, listingUtility1, trainers1);
                     listingUtility1.PublicSave();                
                 }
@@ -122,8 +122,6 @@ namespace PA5
                 finally {
                     Save();
                 }
-                
-                //Save();
             }
             else {
                 Console.Clear();
