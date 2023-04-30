@@ -67,13 +67,45 @@ namespace PA5
                         case "n":
                             break;
                         default:
-                            Console.WriteLine("Please enter 'y' for yes or 'n' for no");
+                        Console.Clear();
+                            Console.WriteLine("Please enter 'y' for yes or 'n' for no (press any key to continue)");
                             Console.ReadKey();
                             break;
                     }
                     if(choice == "n") break;
                 }
 
+            }
+
+        }
+
+        public void PrintIndividualSessionReportNoSave() {
+            string inputEmail;
+            string customerName = "n/a";
+            bool isEmailThere = false;
+            Console.Write("Enter an email address to see associated reports: ");
+            inputEmail = Console.ReadLine();
+
+            for(int i = 0; i < Session.GetCount(); i++) {
+                if(sessions[i].GetCustomerEmail() == inputEmail) {
+                    isEmailThere = true;
+                    customerName = sessions[i].GetCustomerName();
+                    break;
+                }
+            }
+
+            if(isEmailThere == false) {
+                Console.WriteLine($"Sorry no information available for \"{inputEmail}\"");
+                Console.ReadKey();
+            }
+            else {
+                Console.Clear();
+                Console.WriteLine($"Sessions for {customerName}:\n\n");
+                for(int i = 0; i < Session.GetCount(); i++) {
+                    if(sessions[i].GetCustomerEmail() == inputEmail) {
+                        Console.WriteLine(sessions[i].ToString());
+                    }
+                }
             }
 
         }
@@ -89,7 +121,8 @@ namespace PA5
                         case "n":
                             return false;
                         default:
-                            Console.WriteLine("Please enter 'y' for yes or 'n' for no");
+                            Console.Clear();
+                            Console.WriteLine("Please enter 'y' for yes or 'n' for no (press any key to continue)");
                             Console.ReadKey();
                             break;
                     }

@@ -39,30 +39,37 @@ namespace PA5
             listingUtility1.GetAllListingsFromFile();
 
             while(true) {
+                Console.Clear();
                 Console.WriteLine("Enter a Session ID (or 'cancel' to cancel): ");
                 sessionID = Console.ReadLine();
                 if(sessionID.ToLower() == "cancel") {
                     return;
                 }
-                for(int i = 0; i < Listing.GetCount(); i++) {
-                    if(listings1[i].GetIsListingTaken() == "yes" && (listings1[i].GetListingID() == sessionID)) {
-                        // Console.Clear();
-                        Console.WriteLine("Listing is already taken!");
-                        break;
+                index = FindListingID(sessionID, listings1);
+                if(index == -1 || (listings1[index].GetIsListingTaken() == "yes" && (listings1[index].GetListingID() == sessionID))) {
+                    if(index == -1) {
+                    Console.Clear();
+                    Console.WriteLine("Please enter a valid listing ID!\nMust be exact same as available listing ID (press any key to continue)");
+                    Console.ReadKey();
                     }
-                    else {
-                    
+                    if(index != -1 && (listings1[index].GetIsListingTaken() == "yes" && (listings1[index].GetListingID() == sessionID))) {
+                        Console.Clear();
+                        Console.WriteLine("Listing is already taken!");
+                        Console.ReadKey();
+                    }
+                } 
+                else {
+                    for(int i = 0; i < Listing.GetCount(); i++) {
                         if(listings1[i].GetListingID() == sessionID) {
                             index = i;
                             break;
                         }
-                        else {
-                            Console.Clear();
-                            Console.WriteLine("Please enter a valid session ID!\nMust be exact same as available session ID\n\n");
+                        else if(index != -1){
+                            break;
                         }
                     }
+                    if(index != -1) break;
                 }
-                if(index != -1) break;
             }
             mySession.SetSessionID(listings1[index].GetListingID());
             listings1[listingUtility1.Find(sessionID)].SetIsListingTaken("yes");
@@ -191,7 +198,16 @@ namespace PA5
             return -1;
         }
 
-        public void UpdateSession(Listing[] listings1, ListingUtility listingUtility1, Trainer[] trainers1, TrainerUtility trainerUtility1) {
+        public int FindListingID(string searchVal, Listing[] listings) {
+            for(int i = 0; i < Listing.GetCount(); i++) {
+            if(listings[i].GetListingID().ToLower() == searchVal.ToLower()) {
+                return i;
+            }
+            }
+            return -1;
+        }
+
+        public void UpdateSession(Listing[] listings1, ListingUtility listingUtility1, Trainer[] trainers1, TrainerUtility trainerUtility1, Session[] sessions, SessionUtility sessionUtility1) {
             Console.WriteLine("Enter the \"Session ID\" to update a sessions's info: ");
             string searchVal = Console.ReadLine();
             int foundIndex = Find(searchVal);
@@ -285,28 +301,36 @@ namespace PA5
                 string input2;
                 bool validAnswer = false;
                 listingUtility1.GetAllListingsFromFile();
+                sessionUtility1.GetAllSessionsFromFile();
+                
                 int listingIndex = listingUtility1.FindListingID(searchVal);
+                int sessionIndex = sessionUtility1.Find(searchVal);
 
                 while (!validAnswer) {
                     Console.WriteLine("Enter if the session has been 'booked', 'completed', or 'canceled'");
                     input2 = Console.ReadLine();
 
-                    if (input2.ToLower() == "booked" || input2.ToLower() == "completed" || input2.ToLower() == "canceled") {
+                    if (input2.ToLower() == "booked" || input2.ToLower() == "completed") {
                         sessions[foundIndex].SetSessionStatus(input2.ToLower());
                         if(input2.ToLower() == "booked" || input2.ToLower() == "completed") {
                             listings1[listingIndex].SetIsListingTaken("yes");
                         }
-                        else  {
-                            listings1[listingIndex].SetIsListingTaken("no");
-                        }
                         listingUtility1.PublicSave();
                         validAnswer = true;
-                    } else {
+                        Save();
+                    } 
+                    else if (input2.ToLower() == "canceled"){
+                        listings1[listingIndex].SetIsListingTaken("no");
+                        listingUtility1.PublicSave();
+                        sessionUtility1.DeleteSession(sessionIndex);
+                        validAnswer = true;
+                    }
+                    else {
                         Console.WriteLine("Invalid input, please enter 'booked', 'completed', or 'canceled'.");
                     }
                 }     
 
-                    Save();
+                    //Save();
             }//end of over arching IF statement
             else {
                 Console.Clear();
@@ -342,6 +366,7 @@ namespace PA5
             //     if(index != -1) break;
             // }
 //----------------------------
+
         public void DeleteSession(Listing[] listings, ListingUtility listingUtility) {
             Console.WriteLine("Enter the \"Session ID\" to be deleted (enter \"cancel\" to cancel): ");
             string searchVal = Console.ReadLine();
@@ -376,6 +401,20 @@ namespace PA5
             }
             
         } 
+
+        public void DeleteSession(int sessionIndex) {
+                int foundIndex = sessionIndex;
+                string[] lines = File.ReadAllLines("transactions.txt");
+
+                    if(foundIndex >= 0 && foundIndex < lines.Length) {
+                        lines[foundIndex] = null;//set line to null then below, remove null
+                        lines = lines.Where(x => x != null).ToArray();//.where() as used returns all elements in sequence that isn't null... to array converts back to array.
+                    }
+                    File.WriteAllLines("transactions.txt", lines);
+                    Console.Clear(); 
+                    Console.WriteLine("Session deleted");
+                    Console.ReadKey();
+            }
 
     
 

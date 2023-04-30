@@ -39,22 +39,26 @@ namespace PA5
             int index = -1;
             trainerUtility1.GetAllTrainersFromFile();
             while(true) {
+                Console.Clear();
                 Console.WriteLine("Enter a Trainer ID (or 'cancel' to cancel): ");
                 trainerID = Console.ReadLine();
                 if(trainerID.ToLower() == "cancel") {
                     return;
                 }
+                if(FindTrainerID(trainerID, trainers1) == -1) {
+                    Console.Clear();
+                    Console.WriteLine("Please enter a valid trainer ID!\nMust be exact same as available trainer IDs\n\n");
+                    Console.ReadKey();
+                }
+                else {
                 for(int i = 0; i < Trainer.GetCount(); i++) {
                     if(trainers1[i].GetTrainerID() == trainerID) {
                         index = i;
                         break;
                     }
-                    else {
-                        Console.Clear();
-                        Console.WriteLine("Please enter a valid trainer ID!\nMust be exact same as available trainer IDs\n\n");
-                    }
                 }
                 if(index != -1) break;
+                }
             }
             myListing.SetTrainerID(trainers1[index].GetTrainerID());
 
@@ -189,6 +193,15 @@ namespace PA5
         public int FindTrainerID(string searchVal) {
             for(int i = 0; i < Session.GetCount(); i++) {
             if(listings[i].GetTrainerID().ToLower() == searchVal.ToLower()) {
+                return i;
+            }
+            }
+            return -1;
+        }
+
+        public int FindTrainerID(string searchVal, Trainer[] trainers) {
+            for(int i = 0; i < Trainer.GetCount(); i++) {
+            if(trainers[i].GetTrainerID().ToLower() == searchVal.ToLower()) {
                 return i;
             }
             }

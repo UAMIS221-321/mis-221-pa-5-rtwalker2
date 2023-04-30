@@ -49,40 +49,7 @@ SessionReport sessionReport = new SessionReport(sessions);
                 }
                 break;
             case "2": //choice 2
-                while (true) {
-                    Console.Clear();
-                    Console.WriteLine("Option 2 Menu:");
-                    Console.WriteLine("1. Sub-option 1");
-                    Console.WriteLine("2. Sub-option 2");
-                    Console.WriteLine("3. Back to Main Menu");
-
-                    Console.Write("\nEnter your choice: ");
-                    string subChoice = Console.ReadLine();
-
-                    switch (subChoice)
-                    {
-                        case "1":
-                            // Do something for Sub-option 1
-                            Console.WriteLine("Sub-option 1 selected");
-                            Console.ReadKey();
-                            break;
-                        case "2":
-                            // Do something for Sub-option 2
-                            Console.WriteLine("Sub-option 2 selected");
-                            Console.ReadKey();
-                            break;
-                        case "3":
-                            // Go back to Main Menu
-                            break;
-                        default:
-                            Console.WriteLine("Invalid choice");
-                            Console.ReadKey();
-                            break;
-                    }
-
-                    if (subChoice == "3")
-                        break;
-                }
+                CustomerPath(trainers, trainerUtility, trainerReport, listings, listingUtility, listingReport, sessions, sessionUtility, sessionReport);
                 break;
             case "3": //choice 3, exit
                 return;
@@ -115,6 +82,55 @@ static void DisplayOperatorMenu() { //Shows the OPERATOR menu to user
     Console.Write("\nEnter your choice: ");
 }
 
+static void CustomerPath(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport, Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport) {
+                while (true) {
+                    Console.Clear();
+                    Console.WriteLine("Customer Menu:");
+                    Console.WriteLine("1. View Available Sessions");
+                    Console.WriteLine("2. Book a Session");
+                    Console.WriteLine("3. Change Booking status");
+                    Console.WriteLine("4. View Your Bookings");
+                    Console.WriteLine("5. Back to Main Menu");
+
+                    Console.Write("\nEnter your choice: ");
+                    string subChoice = Console.ReadLine();
+
+                    switch (subChoice)
+                    {
+                        case "1":
+                            // Do something for Sub-option 1
+                            Console.Clear();
+                            ViewSessions(sessions, sessionUtility, sessionReport, listings, listingUtility, listingReport);
+                            break;
+                        case "2":
+                            // Do something for Sub-option 2
+                            Console.Clear();
+                            CustomerBookSession(sessions, sessionUtility, sessionReport, listings, listingUtility, trainers, trainerUtility);
+                            break;
+                        case "3":
+                            Console.Clear();
+                            sessionUtility.GetAllSessionsFromFile();
+                            sessionUtility.UpdateSession(listings, listingUtility, trainers, trainerUtility, sessions, sessionUtility);
+                            break;
+                        case "4":
+                            Console.Clear();
+                            sessionUtility.GetAllSessionsFromFile();
+                            sessionReport.PrintIndividualSessionReportNoSave();
+                            Console.ReadKey();
+                            break;
+                        case "5":
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice");
+                            Console.ReadKey();
+                            break;
+                    }
+
+                    if (subChoice == "5")
+                        break;
+                }
+}
+
 static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, TrainerReport trainerReport, Listing[] listings, ListingUtility listingUtility, ListingReport listingReport, Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport) { //OPERATOR MENU AND METHODS----------------
     while (true) {
         DisplayOperatorMenu(); //displays answer choices for the operator menu
@@ -139,7 +155,6 @@ static void OperatorPath(Trainer[] trainers, TrainerUtility trainerUtility, Trai
             case "4":
                 //Console.WriteLine("run reports selected");
                 ViewReports(trainers, trainerUtility, trainerReport, listings, listingUtility, listingReport, sessions, sessionUtility, sessionReport);
-                Console.ReadKey();
                 break;
             case "5":
                 // Go back to Main Menu
@@ -314,6 +329,11 @@ static void ViewSessions(Session[] sessions, SessionUtility sessionUtility, Sess
     Console.ReadKey();
 }
 
+static void CustomerBookSession(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport, Listing[] listings, ListingUtility listingUtility, Trainer[] trainers, TrainerUtility trainerUtility) {
+    sessionUtility.GetAllSessionsFromFile();
+    sessionUtility.AddSession(listings, listingUtility, trainers, trainerUtility);
+}
+
 static void BookSession(Session[] sessions, SessionUtility sessionUtility, SessionReport sessionReport, Listing[] listings, ListingUtility listingUtility, Trainer[] trainers, TrainerUtility trainerUtility) {
     while (true) {
         Console.Clear();
@@ -337,7 +357,7 @@ static void BookSession(Session[] sessions, SessionUtility sessionUtility, Sessi
             case "2"://EDIT SESSION
                 Console.Clear();
                 sessionUtility.GetAllSessionsFromFile();
-                sessionUtility.UpdateSession(listings, listingUtility, trainers, trainerUtility);
+                sessionUtility.UpdateSession(listings, listingUtility, trainers, trainerUtility, sessions, sessionUtility);
                 break;
             case "3"://DELETE SESSION
                 Console.Clear();
